@@ -3,5 +3,5 @@
 </div>
 <div class="ms-1 grid flex-1 text-start text-sm gap-1">
     <span class="mb-0.5 truncate leading-none font-semibold">{{ config('app.name') }}</span>
-    <span class="mb-0.5 truncate leading-none">Nama Company</span>
+    <livewire:company-name />
 </div>

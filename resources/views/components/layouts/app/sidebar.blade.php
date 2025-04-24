@@ -29,9 +29,11 @@
 
                 <flux:navlist.group :heading="__('Configuration')" class="grid">
                     {{-- Company Setting --}}
-                    <flux:navlist.item icon="cog-6-tooth" :href="`#`" :current="`#`" wire:navigate>{{ __('Company Setting') }}</flux:navlist.item>
+                    <flux:navlist.item icon="cog-6-tooth" :href="route('admin.company-settings')" :current="request()->routeIs('admin.company-settings')" wire:navigate>{{ __('Company Setting') }}</flux:navlist.item>
+                    
                     {{-- Departments & Positions --}}
-                    <flux:navlist.item icon="building-office-2" :href="`#`" :current="`#`" wire:navigate>{{ __('Departments & Positions') }}</flux:navlist.item>
+                    <flux:navlist.item icon="building-office-2" :href="route('admin.departments-and-positions')" :current="request()->routeIs('admin.departments-and-positions')" wire:navigate>{{ __('Departments & Positions') }}</flux:navlist.item>
+
                     {{-- Salaries Componenet --}}
                     <flux:navlist.item icon="banknotes" :href="`#`" :current="`#`" wire:navigate>{{ __('Salary Components') }}</flux:navlist.item>
                     {{-- Tax Setting --}}
