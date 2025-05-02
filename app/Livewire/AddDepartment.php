@@ -23,6 +23,10 @@ class AddDepartment extends Component
         Department::create($validated);
 
         $this->dispatch('added');
+        $this->close();
+    }
+    public function close()
+    {
         $this->reset(['name', 'description']);
         $this->modal('add-department')->close();
     }

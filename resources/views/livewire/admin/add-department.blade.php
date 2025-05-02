@@ -5,7 +5,7 @@
         </flux:button>
     </flux:modal.trigger>
 
-    <flux:modal name="add-department" class="md:w-96">
+    <flux:modal wire:close="close" name="add-department" class="md:w-96">
         <form wire:submit="addDepartment" class="space-y-6">
             <div>
                 <flux:heading size="lg">New Department</flux:heading>
