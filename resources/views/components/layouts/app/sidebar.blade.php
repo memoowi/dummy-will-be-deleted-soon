@@ -35,7 +35,8 @@
                     <flux:navlist.item icon="building-office-2" :href="route('admin.departments-and-positions')" :current="request()->routeIs('admin.departments-and-positions')" wire:navigate>{{ __('Departments & Positions') }}</flux:navlist.item>
 
                     {{-- Salaries Componenet --}}
-                    <flux:navlist.item icon="banknotes" :href="`#`" :current="`#`" wire:navigate>{{ __('Salary Components') }}</flux:navlist.item>
+                    <flux:navlist.item icon="banknotes" :href="route('admin.salary-components')" :current="request()->routeIs('admin.salary-components')" wire:navigate>{{ __('Salary Components') }}</flux:navlist.item>
+                    
                     {{-- Tax Setting --}}
                     <flux:navlist.item icon="document-currency-dollar" :href="`#`" :current="`#`" wire:navigate>{{ __('Tax Settings') }}</flux:navlist.item>
                 </flux:navlist.group>
