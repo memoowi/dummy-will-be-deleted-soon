@@ -22,7 +22,7 @@ class DepartmentsPositionsTable extends Component
     #[On('added-position')]
     public function getDataTable()
     {
-        $postionDataWithDepartment = Position::with('department')->latest()->get();
+        $postionDataWithDepartment = Position::with('department')->get();
         $this->positions = $postionDataWithDepartment;
     }
     public function showModalDelete($positionId)
