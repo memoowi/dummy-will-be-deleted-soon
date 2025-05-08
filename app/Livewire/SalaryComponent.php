@@ -18,6 +18,7 @@ class SalaryComponent extends Component
     public $amount = '';
     public $rule = '';
     public $isEditAllowance = false;
+    public $isDeduction = false;
     #[Title('Salary Component')]
     public function render()
     {
@@ -44,7 +45,8 @@ class SalaryComponent extends Component
         $this->dispatch('added-allowance');
         Toaster::success('Allowance added successfully');
         $this->closeModal();
-        $this->modal('allowance')->close();
+        $this->modal('main-modal')->close();
+        $this->resetPage();
     }
     public function editModalAllowance($allowanceId)
     {
@@ -55,7 +57,7 @@ class SalaryComponent extends Component
         $this->amount = $allowance->amount;
         $this->rule = $allowance->rule;
         $this->isEditAllowance = true;
-        $this->modal('allowance')->show();
+        $this->modal('main-modal')->show();
     }
     public function updateAllowance()
     {
@@ -71,6 +73,22 @@ class SalaryComponent extends Component
          $this->dispatch('updated-allowance');
          Toaster::success('Allowance updated successfully');
          $this->closeModal();
-         $this->modal('allowance')->close();
+         $this->modal('main-modal')->close();
+         $this->resetPage();
+    }
+    public function deleteModalAllowance($allowanceId, $allowanceName)
+    {
+        $this->selectedId = $allowanceId;
+        $this->name = $allowanceName;
+        $this->modal('delete-modal')->show();
+    }
+    public function deleteAllowance()
+    {
+        $allowance = Allowance::find($this->selectedId);
+        $allowance->delete();
+        Toaster::success('Allowance deleted successfully');
+        $this->closeModal();
+        $this->modal('delete-modal')->close();
+        $this->resetPage();
     }
 }

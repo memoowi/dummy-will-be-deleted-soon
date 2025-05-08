@@ -6,7 +6,7 @@
 
     {{-- Allowances --}}
     <div class="mb-4">
-        <flux:modal.trigger name="allowance">
+        <flux:modal.trigger name="main-modal">
         <flux:button icon="plus" variant="primary" type="button" class="w-full">
             {{ __('Add Allowance') }}
         </flux:button>
@@ -40,7 +40,7 @@
                                 <flux:button wire:click="editModalAllowance({{ $allowance->id }})" icon="pencil-square" variant="primary" type="button">
                                     {{ __('Edit') }}
                                 </flux:button>
-                                <flux:button icon="trash" variant="danger" type="button">
+                                <flux:button wire:click="deleteModalAllowance(`{{ $allowance->id }}`,`{{ $allowance->name }}`)" icon="trash" variant="danger" type="button">
                                     {{ __('Delete') }}
                                 </flux:button>
                             </div>
@@ -53,8 +53,8 @@
         {{$allowances->links()}}
     </div>
 
-    {{-- Modal Add and Edit Allowance --}}
-    <flux:modal wire:close="closeModal" name="allowance" class="md:w-96">
+    {{-- Modal Add and Edit --}}
+    <flux:modal wire:close="closeModal" name="main-modal" class="md:w-96">
         <form @if ($isEditAllowance)
             wire:submit="updateAllowance"
             @else
@@ -90,13 +90,36 @@
         </form>
     </flux:modal>
 
+    {{-- Modal Delete Allowance --}}
+    <flux:modal wire:close="closeModal" name="delete-modal" class="min-w-[22rem]">
+        <form wire:submit="deleteAllowance" class="space-y-6">
+            <div>
+                <flux:heading size="lg">Delete {{$name}}?
+                </flux:heading>
+                <flux:text class="mt-2">
+                    <p>You're about to delete this position.</p>
+                    <p>This action cannot be undone.</p>
+                </flux:text>
+            </div>
+            <div class="flex gap-2">
+                <flux:spacer />
+                <flux:modal.close>
+                    <flux:button variant="ghost">Cancel</flux:button>
+                </flux:modal.close>
+                <flux:button type="submit" variant="danger">Delete</flux:button>
+            </div>
+        </form>
+    </flux:modal>
+
     <flux:separator  />
 
     {{-- Deductions --}}
     <div class="mt-4">
+        <flux:modal.trigger name="main-modal">
         <flux:button icon="plus" variant="primary" type="button" class="w-full">
             {{ __('Add Deduction') }}
         </flux:button>
+        </flux:modal.trigger>
 
         <table class="w-full table-auto border-collapse">
             <thead>
