@@ -55,26 +55,49 @@
 
     {{-- Modal Add and Edit --}}
     <flux:modal wire:close="closeModal" name="main-modal" class="md:w-96">
-        <form @if ($isEditAllowance)
-            wire:submit="updateAllowance"
+        <form 
+
+            @if ($isEditAllowance)
+                @if ($isDeduction)
+                    wire:submit="updateDeduction"
+                @else
+                    wire:submit="updateAllowance"
+                @endif
             @else
-            wire:submit="addAllowance"
-            @endif class="space-y-6">
+                @if ($isDeduction)
+                    wire:submit="addDeduction"
+                @else
+                    wire:submit="addAllowance"
+                @endif
+            @endif 
+            
+            class="space-y-6">
             <div>
                 <flux:heading size="lg">
-                    @if ($isEditAllowance) Edit @else New @endif Allowance
+                    @if ($isEditAllowance) Edit @else New @endif 
+                    @if ($isDeduction) Deduction @else Allowance @endif 
                 </flux:heading>
                 <flux:text class="mt-2">
                     @if ($isEditAllowance)
-                    Update allowance to the system. This will allow you to manage your allowances more effectively.
+                        @if ($isDeduction)
+                            Update deduction to the system. This will allow you to manage your deductions for your company.
+                        @else
+                            Update allowance to the system. This will allow you to manage your allowances more effectively.
+                        @endif
                     @else
-                    Add a new allowance to the system. This will allow you to manage your allowances more effectively.
+                        @if ($isDeduction)
+                            Add a new deduction to the system. This will allow you to manage your deductions for your company.
+                        @else
+                            Add a new allowance to the system. This will allow you to manage your allowances more effectively.
+                        @endif
                     @endif
                 </flux:text>
             </div>
             <flux:input wire:model="name" label="Name" placeholder="Name" required />
             <flux:textarea wire:model="description" label="Description" placeholder="Description" />
             <flux:input wire:model="amount" label="Amount" placeholder="Amount" required />
+
+            @if (!$isDeduction)
             <flux:text class="mt-2">
                 For Rule "Percentage".<br /> 1 is equal to 100%,<br /> 0.5 is equal to 50%.
             </flux:text>
@@ -82,6 +105,7 @@
                 <flux:select.option value="fixed">Fixed</flux:select.option>
                 <flux:select.option value="percentage">Percentage</flux:select.option>
             </flux:select>
+            @endif
             
             <div class="flex">
                 <flux:spacer />
@@ -115,7 +139,7 @@
 
     {{-- Deductions --}}
     <div class="mt-4">
-        <flux:modal.trigger name="main-modal">
+        <flux:modal.trigger name="main-modal" wire:click="$set('isDeduction', true)">
         <flux:button icon="plus" variant="primary" type="button" class="w-full">
             {{ __('Add Deduction') }}
         </flux:button>

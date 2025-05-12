@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->longText('description')->nullable();
             $table->decimal('rate', 15, 2)->default(0);
-            $table->string('threshold');
+            $table->string('threshold'); 
+            // 0-10000000
+            // 10000001-40000000
             $table->timestamps();
         });
     }

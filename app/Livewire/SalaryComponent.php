@@ -24,7 +24,7 @@ class SalaryComponent extends Component
     {
         $allowances = Allowance::latest()->paginate(5);
         return view('livewire.admin.salary-component',[
-            'allowances' => Allowance::latest()->paginate(5)
+            'allowances' => Allowance::latest()->paginate(5, pageName: 'allowances-page'),
             // 'deductions' => Deduction::latest()->paginate(5),
         ]);
     }
@@ -46,7 +46,7 @@ class SalaryComponent extends Component
         Toaster::success('Allowance added successfully');
         $this->closeModal();
         $this->modal('main-modal')->close();
-        $this->resetPage();
+        $this->resetPage('allowances-page');
     }
     public function editModalAllowance($allowanceId)
     {
@@ -74,7 +74,7 @@ class SalaryComponent extends Component
          Toaster::success('Allowance updated successfully');
          $this->closeModal();
          $this->modal('main-modal')->close();
-         $this->resetPage();
+         $this->resetPage('allowances-page');
     }
     public function deleteModalAllowance($allowanceId, $allowanceName)
     {
@@ -89,6 +89,20 @@ class SalaryComponent extends Component
         Toaster::success('Allowance deleted successfully');
         $this->closeModal();
         $this->modal('delete-modal')->close();
+        $this->resetPage('allowances-page');
+    }
+    public function addDeduction()
+    {
+        $validated = $this->validate([
+            'name' => ['required','min:3','max:255','string','unique:deductions,name'],
+            'description' => ['required','string','max:1000'],
+            'amount' => ['required','numeric','gt:100'],
+        ]);
+
+        Deduction::create($validated);
+        Toaster::success('Deduction added successfully');
+        $this->closeModal();
+        $this->modal('main-modal')->close();
         $this->resetPage();
     }
 }
